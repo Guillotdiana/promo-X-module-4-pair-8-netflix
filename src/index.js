@@ -34,27 +34,23 @@ server.get('/movies', (req, res) => {
       year: 2010,
       director: "Christopher Nolan",
     },
-  ];
-  res.json({success: true,movies:  fakeMovies});
-});
-
-server.post('/public/movies/images', (req, res) => {
-  const fakeMovies = [
     {
       id: 3,
     title: "Gambita de dama",
     genre: "Drama",
     image:
-        "//beta.adalab.es/curso-intensivo-fullstack-recursos/apis/netflix-v1/images/gambito-de-dama.jpg"
+        "https://beta.adalab.es/curso-intensivo-fullstack-recursos/apis/netflix-v1/images/gambito-de-dama.jpg"
 },
   {
     id: 4,
     title: "Friends",
     genre: "Comedia",
     image:
-        "//beta.adalab.es/curso-intensivo-fullstack-recursos/apis/netflix-v1/images/friends.jpg"
+        "https://beta.adalab.es/curso-intensivo-fullstack-recursos/apis/netflix-v1/images/friends.jpg"
   }
-  ]
+  ];
   res.json({success: true,movies:  fakeMovies});
 });
+
+
 
