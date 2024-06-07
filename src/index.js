@@ -11,6 +11,26 @@ const serverPort = 4000;
 server.listen(serverPort, () => {
   console.log(`Server listening at http://localhost:${serverPort}`);
 });
+server.get('/movies', async (req, res) => {
+  const connDB = await conexion();
+  //query params 
+  const genreFilterParams = req.query.genre;
+  console.log(genreFilterParams)
+  //sql->SELECT 
+  const selectMovies = 'SELECT * FROM movies WHERE genre= ?;';
+  let data;
+  if (genreFilterParams === ""){
+    const selectMovies = "SELEST * FROM movies;";
+    const [results]= await conn.query(selectMovies,);
+    data = results;
+  } else{
+    const selectMovies = "SELECT * movies WHERE genre = ?;";
+    const [results]= await conn.query(selectMovies [genreFilterMovies]);
+    data = results;
+  }
+  res.json({success: true,movies:  fakeMovies});
+});
+
 
 async function conexion() {
   //defino la ubicacion y datos de BD
@@ -24,15 +44,6 @@ async function conexion() {
   await conn.connect();
   return conn;
 }
-
-
-// endpoints
-server.get('/movies', async (req, res) => {
-  const connDB = await conexion();
-  const selectMovies = 'SELECT * FROM movies;';
-  const [result] = await connDB.query(selectMovies);
-  res.json({success: true,movies:  fakeMovies});
-});
 
 
 //Servidor de estaticos. Debe estar al final para que primero se renderice la peticion
