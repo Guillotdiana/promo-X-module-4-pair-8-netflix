@@ -48,5 +48,6 @@ async function conexion() {
 
 
 //Servidor de estaticos. Debe estar al final para que primero se renderice la peticion
+server.use(express.static("src/public-movies-images"))
 server.use(express.static("src/public-react"))
 
