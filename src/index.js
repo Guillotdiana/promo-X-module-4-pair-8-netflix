@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const mysql = require('mysql2/promise');
 
 // create and config server
 const server = express();
@@ -12,23 +13,23 @@ server.listen(serverPort, () => {
   console.log(`Server listening at http://localhost:${serverPort}`);
 });
 server.get('/movies', async (req, res) => {
-  const connDB = await conexion();
+  const conn = await conexion();
   //query params 
   const genreFilterParams = req.query.genre;
   console.log(genreFilterParams)
+
   //sql->SELECT 
-  const selectMovies = 'SELECT * FROM movies WHERE genre= ?;';
   let data;
-  if (genreFilterParams === ""){
-    const selectMovies = "SELEST * FROM movies;";
-    const [results]= await conn.query(selectMovies,);
+  if (!genreFilterParams){
+    const selectMovies = 'SELECT * FROM movies;';
+    const [results]= await conn.query(selectMovies);
     data = results;
   } else{
-    const selectMovies = "SELECT * movies WHERE genre = ?;";
-    const [results]= await conn.query(selectMovies [genreFilterMovies]);
+    const selectMovies = 'SELECT * FROM movies WHERE genre = ?;';
+    const [results]= await conn.query(selectMovies, [genreFilterParams]);
     data = results;
   }
-  res.json({success: true,movies:  fakeMovies});
+  res.json({success: true, movies: data});
 });
 
 
