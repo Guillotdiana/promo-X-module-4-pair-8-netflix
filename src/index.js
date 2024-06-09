@@ -14,22 +14,33 @@ server.listen(serverPort, () => {
 });
 server.get('/movies', async (req, res) => {
   const conn = await conexion();
-  //query params 
   const genreFilterParams = req.query.genre;
-  console.log(genreFilterParams)
+  const sortFilterParams = req.query.sort;
+  console.log(`genreFilterParams: ${genreFilterParams}`)
+  console.log(`sortFilterParams: ${sortFilterParams}`)
 
-  //sql->SELECT 
-  let data;
-  if (!genreFilterParams){
-    const selectMovies = 'SELECT * FROM movies;';
-    const [results]= await conn.query(selectMovies);
-    data = results;
-  } else{
-    const selectMovies = 'SELECT * FROM movies WHERE genre = ?;';
-    const [results]= await conn.query(selectMovies, [genreFilterParams]);
-    data = results;
+
+  let selectMovies = 'SELECT * FROM movies';
+  const queryParams = [];
+
+  // Si genreFilterParams esta definido, modifica la query y agrega un parametrp
+  if (genreFilterParams) {
+    selectMovies += ' WHERE genre = ?';
+    queryParams.push(genreFilterParams);
   }
-  res.json({success: true, movies: data});
+
+  // Si sortFilterParams esta definido, modifica la query
+  if (sortFilterParams === 'asc') {
+    selectMovies += ' ORDER BY title ASC';
+  } else if (sortFilterParams === 'desc') {
+    selectMovies += ' ORDER BY title DESC';
+  }
+
+  console.log(`selectMovies: ${selectMovies}`)
+  console.log(`queryParams: ${queryParams}`)
+  const [results] = await conn.query(selectMovies, queryParams);
+
+  res.json({ success: true, movies: results });
 });
 
 
