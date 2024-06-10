@@ -10,10 +10,10 @@ const getMoviesFromApi = ({genre, sort}) => {
   // Se define la url de la api
   let apiUrl = '//localhost:4000/movies';
 
-  // Create an instance of URLSearchParams to manage query parameters
+  // urlsearch para manejar las querys params
   const params = new URLSearchParams();
 
-  // Add genre and sort parameters if they are defined
+  // agrego parametros se genre y sort si están definidos
   if (genre) {
     params.append('genre', genre);
   }
@@ -21,7 +21,7 @@ const getMoviesFromApi = ({genre, sort}) => {
     params.append('sort', sort);
   }
 
-  // Append the query parameters to the API URL
+  // agrega los parametros a la query en la  API URL
   const fullUrl = `${apiUrl}?${params.toString()}`;
 
   return fetch(fullUrl)
