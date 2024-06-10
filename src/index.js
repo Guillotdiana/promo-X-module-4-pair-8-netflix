@@ -25,7 +25,7 @@ server.get('/movies', async (req, res) => {
   const queryParams = [];
 
   api.post('/api/register', async (req, res) => {
-    const conex = away conexion();
+    const conex = await conexion();
     const { email, pass } = req.body;
     const selectEmail = 'SELECT *FROM user WHERE email = ?';
     const [emailResult] = await conex.query(selectEmail, [email]);
