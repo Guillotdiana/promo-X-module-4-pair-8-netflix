@@ -52,5 +52,7 @@ server.get('/movies', (req, res) => {
   res.json({success: true,movies:  fakeMovies});
 });
 
+api.use(express.static)
+
 
 
